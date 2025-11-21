@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>📦 Inventory Manager</h1>
+            </div>
+            <div class="nav-search">
+                <input type="text" id="searchInput" placeholder="Search products..." class="search-input">
+                <select id="categoryFilter" class="filter-select">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+        </nav>
+
+        <!-- Dashboard Stats -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-content">
+                    <p class="stat-label">Total Products</p>
+                    <p class="stat-value" id="totalProducts">0</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <p class="stat-label">Total Value</p>
+                    <p class="stat-value" id="totalValue">$0.00</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-content">
+                    <p class="stat-label">Low Stock Items</p>
+                    <p class="stat-value" id="lowStock">0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Product Section -->
+        <section class="add-product-section">
+            <h2>➕ Add New Product</h2>
+            <form id="productForm" class="product-form">
+                <div class="form-group">
+                    <label for="productName">Product Name *</label>
+                    <input type="text" id="productName" required placeholder="Enter product name">
+                </div>
+
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" placeholder="Enter product description"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productCategory">Category *</label>
+                        <input type="text" id="productCategory" required placeholder="e.g., Electronics">
+                    </div>
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity *</label>
+                        <input type="number" id="productQuantity" required min="0" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="productPrice">Price ($) *</label>
+                        <input type="number" id="productPrice" required min="0" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="productReorder">Reorder Level</label>
+                        <input type="number" id="productReorder" min="0" placeholder="10">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Product</button>
+            </form>
+        </section>
+
+        <!-- Products Table -->
+        <section class="products-section">
+            <h2>📋 Inventory List</h2>
+            <div class="table-responsive">
+                <table class="products-table">
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Value</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsList">
+                        <tr>
+                            <td colspan="7" class="no-data">No products yet. Add one to get started!</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Edit Product</h2>
+            <form id="editForm" class="product-form">
+                <input type="hidden" id="editProductId">
+
+                <div class="form-group">
+                    <label for="editProductName">Product Name</label>
+                    <input type="text" id="editProductName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editProductDescription">Description</label>
+                    <textarea id="editProductDescription"></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProductCategory">Category</label>
+                        <input type="text" id="editProductCategory" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editProductQuantity">Quantity</label>
+                        <input type="number" id="editProductQuantity" required min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editProductPrice">Price ($)</label>
+                        <input type="number" id="editProductPrice" required min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="editProductReorder">Reorder Level</label>
+                        <input type="number" id="editProductReorder" min="0">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
