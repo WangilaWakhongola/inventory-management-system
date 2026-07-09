@@ -131,7 +131,7 @@ Please follow [PEP 8](https://pep8.org/) style guidelines.
 
 **Emmanuel Wakhongola**
 - GitHub: [@WangilaWakhongola](https://github.com/WangilaWakhongola)
-- Email: wangilaemmanuel06@gmail.com
+- Email: wangilawakhongola@gmail.com
 
 ## License
 
